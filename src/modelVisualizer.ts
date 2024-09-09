@@ -206,7 +206,10 @@ export class ModelVisualizer implements vscode.CustomEditorProvider<ModelFile> {
 	 */
 	private readonly webviews = new WebviewCollection();
 
-	private static python = pythonBridge({stdio: ['pipe', 'pipe', 'pipe'],});
+	private static python = pythonBridge({
+		python: '/Users/wunan/work/zstudio_dev/resources/python-env/python3',
+		cwd: '/Users/wunan/work/zstudio_dev/resources/python-env'
+	});
 
 	constructor(
 		private readonly _context: vscode.ExtensionContext
@@ -280,28 +283,29 @@ export class ModelVisualizer implements vscode.CustomEditorProvider<ModelFile> {
 			enableScripts: true,
 		};
 
-		webviewPanel.webview.html = this.getHtmlForWebview(url);
+		webviewPanel.webview.html = this.getHtmlForWebview(url, webviewPanel.webview);
 		
 	}
 
 	/**
 	 * Get the static HTML used for in our editor's webviews.
 	 */
-	private getHtmlForWebview(url: string): string {
+	private getHtmlForWebview(url: string, webview: vscode.Webview): string {
 		// Local path to script and css for the webview
+		const styleMainUri = webview.asWebviewUri(vscode.Uri.joinPath(
+			this._context.extensionUri, 'media', 'main.css'));
 
 		return `
 			<!DOCTYPE html>
-			<html lang="en">
+			<html lang="en" height="100%" >
 			<head>
 				<meta charset="UTF-8">
 				<meta name="viewport" content="width=device-width, initial-scale=1.0">
+				<link href="${styleMainUri}" rel="stylesheet" />
 				<title>Model Visualization</title>
 			</head>
 			<body>
 				<iframe
-					width="800"
-					height="800" 
 					src="${url}"
 				></iframe>
 			</body>
