@@ -1,0 +1,13 @@
+html, body {
+	height: 100%;
+	width: 100%;
+	padding: 0px;
+	box-sizing: border-box;
+	display: flex;
+}
+
+iframe {
+	width: 100%;
+	flex-grow: 1;
+	border: none;
+}
