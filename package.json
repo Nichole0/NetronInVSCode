@@ -50,10 +50,12 @@
 		]
 	},
 	"scripts": {
+		"all": "yarn compile && yarn package",
 		"vscode:prepublish": "npm run compile",
 		"compile": "tsc -p ./",
 		"lint": "eslint \"src/**/*.ts\"",
-		"watch": "tsc -w -p ./"
+		"watch": "tsc -w -p ./",
+		"package": "vsce package -o origin.vsix"
 	},
 	"devDependencies": {
 		"@types/node": "^16.11.7",
@@ -61,7 +63,8 @@
 		"@typescript-eslint/eslint-plugin": "^5.42.0",
 		"@typescript-eslint/parser": "^5.42.0",
 		"eslint": "^8.26.0",
-		"typescript": "^4.8.4"
+		"typescript": "^4.8.4",
+		"@vscode/vsce": "2.23.0"
 	},
 	"dependencies": {
 		"python-bridge": "^1.1.0"
